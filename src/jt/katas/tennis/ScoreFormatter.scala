@@ -7,8 +7,8 @@ object ScoreFormatter {
 
   def score(game: Game) = {
     game match {
-      case _ if !game.winner.isEmpty => "winner: " + game.winner.get.name
-      case _ if !game.advantage.isEmpty => "advantage: " + game.advantage.get.name
+      case _ if game.winner.isDefined => "winner: " + game.winner.get.name
+      case _ if game.advantage.isDefined => "advantage: " + game.advantage.get.name
       case _ if game.deuce => "deuce"
       case _ => formatSimpleScores(game)
     }
