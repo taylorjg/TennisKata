@@ -7,10 +7,16 @@ class Game(val player1: Player, val player2: Player) {
 
   private val scores = scala.collection.mutable.ListMap(player1 -> 0, player2 -> 0)
 
-  def pointScoredBy(player: Player) = {
-    val oldScore = scores(player)
-    val newScore = oldScore + 1
-    scores(player) = newScore
+  def pointScored(player: Player) = {
+    scores(player) = scores(player) + 1
+  }
+
+  def pointsScored(players: Player*): Unit = {
+    pointsScored(players.toList)
+  }
+
+  def pointsScored(players: List[Player]): Unit = {
+    players foreach pointScored
   }
 
   def scoreFor(player: Player) = {

@@ -37,22 +37,42 @@ class GameSpec extends FunSpec {
 
     describe("scoring scenarios") {
 
-      it("should let me indicate which player won the next point") {
+      it("should let me indicate that a point has been scored") {
         val player1 = new Player("Becker")
         val player2 = new Player("McEnroe")
         val game = new Game(player1, player2)
-        game.pointScoredBy(player1)
+        game.pointScored(player1)
         assertResult(1)(game.scoreFor(player1))
+      }
+
+      it("should let me indicate a series of points scored") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        game.pointsScored(
+          player1,
+          player2,
+          player2,
+          player1,
+          player1)
+        assertResult(3)(game.scoreFor(player1))
+        assertResult(2)(game.scoreFor(player2))
+      }
+
+      it("should let me indicate a list of points scored") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        game.pointsScored(List(player1, player2, player1))
+        assertResult(2)(game.scoreFor(player1))
+        assertResult(1)(game.scoreFor(player2))
       }
 
       it("should indicate the correct winner for a love game") {
         val player1 = new Player("Becker")
         val player2 = new Player("McEnroe")
         val game = new Game(player1, player2)
-        game.pointScoredBy(player1)
-        game.pointScoredBy(player1)
-        game.pointScoredBy(player1)
-        game.pointScoredBy(player1)
+        game.pointsScored(List.fill(4)(player1))
         assertResult(Some(player1))(game.winner)
       }
     }
