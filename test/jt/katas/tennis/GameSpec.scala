@@ -33,6 +33,20 @@ class GameSpec extends FunSpec {
         val game = new Game(player1, player2)
         assertResult(None)(game.winner)
       }
+
+      it("should initially indicate that it is not deuce") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        assertResult(false)(game.deuce)
+      }
+
+      it("should initially indicate that no player has advantage yet") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        assertResult(None)(game.advantage)
+      }
     }
 
     describe("scoring scenarios") {
@@ -74,6 +88,24 @@ class GameSpec extends FunSpec {
         val game = new Game(player1, player2)
         game.pointsScored(List.fill(4)(player1))
         assertResult(Some(player1))(game.winner)
+      }
+
+      it("should indicate that it is deuce at 40 all") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        game.pointsScored(List.fill(3)(player1) ::: List.fill(3)(player2))
+        assertResult(true)(game.deuce)
+      }
+
+      it("should indicate advantage to player1 when it has been deuce and player1 scores another point") {
+        val player1 = new Player("Becker")
+        val player2 = new Player("McEnroe")
+        val game = new Game(player1, player2)
+        game.pointsScored(List.fill(3)(player1) ::: List.fill(3)(player2))
+        assertResult(None)(game.advantage)
+        game.pointScored(player1)
+        assertResult(Some(player1))(game.advantage)
       }
     }
   }

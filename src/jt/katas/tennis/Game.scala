@@ -32,4 +32,23 @@ class Game(val player1: Player, val player2: Player) {
       case _ => None
     }
   }
+
+  def deuce = {
+    val player1Score = scores(player1)
+    val player2Score = scores(player2)
+    (player1Score, player2Score) match {
+      case (s1, s2) if s1 >= 3 && s2 >= 3 && s1 == s2 => true
+      case _ => false
+    }
+  }
+
+  def advantage = {
+    val player1Score = scores(player1)
+    val player2Score = scores(player2)
+    (player1Score, player2Score) match {
+      case (s1, s2) if s1 >= 3 && s2 >= 3 && s1 == s2 + 1 => Some(player1)
+      case (s1, s2) if s1 >= 3 && s2 >= 3 && s2 == s1 + 1 => Some(player2)
+      case _ => None
+    }
+  }
 }
