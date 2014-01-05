@@ -7,6 +7,9 @@ class Game(val player1: Player, val player2: Player) {
 
   private val scores = scala.collection.mutable.Map(player1 -> 0, player2 -> 0)
 
+  def player1Score = scores(player1)
+  def player2Score = scores(player2)
+
   def pointScored(player: Player) = {
     scores(player) = scores(player) + 1
   }
@@ -24,8 +27,6 @@ class Game(val player1: Player, val player2: Player) {
   }
 
   def winner = {
-    val player1Score = scores(player1)
-    val player2Score = scores(player2)
     (player1Score, player2Score) match {
       case (s1, s2) if s1 >= 4 && s1 - s2 >= 2 => Some(player1)
       case (s1, s2) if s2 >= 4 && s2 - s1 >= 2 => Some(player2)
@@ -34,8 +35,6 @@ class Game(val player1: Player, val player2: Player) {
   }
 
   def deuce = {
-    val player1Score = scores(player1)
-    val player2Score = scores(player2)
     (player1Score, player2Score) match {
       case (s1, s2) if s1 >= 3 && s2 >= 3 && s1 == s2 => true
       case _ => false
@@ -43,8 +42,6 @@ class Game(val player1: Player, val player2: Player) {
   }
 
   def advantage = {
-    val player1Score = scores(player1)
-    val player2Score = scores(player2)
     (player1Score, player2Score) match {
       case (s1, s2) if s1 >= 3 && s2 >= 3 && s1 == s2 + 1 => Some(player1)
       case (s1, s2) if s1 >= 3 && s2 >= 3 && s2 == s1 + 1 => Some(player2)
