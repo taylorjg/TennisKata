@@ -16,4 +16,14 @@ class Game(val player1: Player, val player2: Player) {
   def scoreFor(player: Player) = {
     scores(player)
   }
+
+  def winner = {
+    val player1Score = scores(player1)
+    val player2Score = scores(player2)
+    (player1Score, player2Score) match {
+      case (s1, s2) if s1 >= 4 && s1 - s2 >= 2 => Some(player1)
+      case (s1, s2) if s2 >= 4 && s2 - s1 >= 2 => Some(player2)
+      case _ => None
+    }
+  }
 }
