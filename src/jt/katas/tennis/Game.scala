@@ -5,7 +5,7 @@ package jt.katas.tennis
  */
 class Game(val player1: Player, val player2: Player) {
 
-  private val scores = scala.collection.mutable.ListMap(player1 -> 0, player2 -> 0)
+  private val scores = scala.collection.mutable.Map(player1 -> 0, player2 -> 0)
 
   def pointScored(player: Player) = {
     scores(player) = scores(player) + 1
