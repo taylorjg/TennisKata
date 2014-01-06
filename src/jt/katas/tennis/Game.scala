@@ -48,4 +48,9 @@ class Game(val player1: Player, val player2: Player) {
       case _ => None
     }
   }
+
+  def reset() = {
+    scores(player1) = 0
+    scores(player2) = 0
+  }
 }
